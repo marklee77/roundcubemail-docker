@@ -1,4 +1,4 @@
-FROM php:7.1-apache
+FROM php:7.1-fpm
 MAINTAINER Thomas Bruederli <thomas@roundcube.net>
 
 RUN apt-get -qq update \
@@ -15,9 +15,6 @@ RUN apt-get -qq update \
 RUN docker-php-ext-install -j$(nproc) exif intl pdo pdo_mysql pdo_pgsql pdo_sqlite zip
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ && docker-php-ext-install -j$(nproc) gd
 RUN docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu && docker-php-ext-install -j$(nproc) ldap
-
-# enable mod_rewrite
-RUN a2enmod rewrite
 
 # expose these volumes
 VOLUME /var/roundcube/config
@@ -45,5 +42,5 @@ RUN curl https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for
 COPY docker-entrypoint.sh /
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
-CMD ["apache2-foreground"]
+CMD ["php-fpm"]
 

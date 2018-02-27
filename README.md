@@ -1,9 +1,9 @@
-# Running Roundcube in a Docker Container
+# Running Roundcube in a Docker Container with PHP FPM
 
 The simplest method is to run the official image:
 
 ```
-docker run -e ROUNDCUBEMAIL_DEFAULT_HOST=mail -d roundcube/roundcubemail
+docker run -e ROUNDCUBEMAIL_DEFAULT_HOST=mail -d roundcube/roundcubemail:fpm-latest
 ```
 
 ## Configuration/Environment Variables
@@ -65,10 +65,10 @@ Check the Roundcube Webmail wiki for a reference of [Roundcube config options](h
 ## Building a Docker image
 
 Use the `Dockerfile` in this repository to build your own Docker image.
-It pulls the latest build of Roundcube Webmail from the Github download page and builds it on top of a `php:7.1-apache` Docker image.
+It pulls the latest build of Roundcube Webmail from the Github download page and builds it on top of a `php:7.1-fpm` Docker image.
 
 Build it from this directory with
 
 ```
-docker build -t roundcubemail .
+docker build -t roundcubemail-fpm .
 ```
